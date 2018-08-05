@@ -11,11 +11,7 @@ using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.Swagger;
 using SWN.Messaging.Msmq;
-using SWN.MobileService.Api.Data;
-using SWN.MobileService.Api.Infrastructure.Adaptors;
-using SWN.MobileService.Api.PushNotification;
-using SWN.MobileService.Api.PushNotification.Contracts;
-using SWN.MobileService.Api.Services;
+using PatientPortalService.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,36 +44,11 @@ namespace SWN.MobileService
             AddJwtAuthentication(services);
             services.AddMvc();
 
-            services.AddSingleton<IMobileApiClient, MobileApiClient>();
-            services.AddSingleton<IMessageQueue, MsmqMessageQueue>(_ =>
-           {
-               var msmq = new MessageQueue(Configuration[QueuePath]);
-               var messagingQueue = new MsmqMessageQueue(msmq, MessageFormat.Xml);
-               msmq.Formatter = new XmlMessageFormatter(
-                   new String[] {
-                       "SWN.MobileService.Api.Models.ExpressItem, SWN.MobileService.Api"
-                   });
-               return messagingQueue;
-           });
             services.AddSingleton<IMessageConsumerService, MessageConsumerService>();
-            services.AddSingleton<IMessageService, MessageService>();
-            services.AddSingleton<IGetWordBackService, GetWordBackService>();
-            services.AddSingleton<IMessageQueueService>(_ =>
-            new StatusQueueService(
-                new MsmqMessageQueue(Configuration[statusQueueConfig], MessageFormat.Xml)));
-            services.AddSingleton<IMessageDeliveryService, MessageDeliveryService>();
+            //services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<Func<HttpClient>>
             (
                () => new HttpClient()
-            );
-            services.AddSingleton<IPushNotificationService>(_ => new PushNotificationService(Configuration[FirebaseServerKey]));
-
-            var opt = new DbContextOptionsBuilder<MobileServiceContext>()
-              .UseSqlServer(Configuration.GetConnectionString("MobileServiceDatabase"))
-              .Options;
-            services.AddSingleton<Func<MobileServiceContext>>
-            (
-                () => new MobileServiceContext(opt)
             );
 
             var dbConnectionString = Configuration.GetValue<string>("Swn402Database:ConnectionString");
