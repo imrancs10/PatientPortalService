@@ -28,15 +28,17 @@ namespace PatientPortalService.Api.Services
             {
                 try
                 {
-
                     PatientPortalEntities _db = new PatientPortalEntities();
-
                     //get message to be sent from db 
-                    var message = _db.AppointmentInfoes.Where(x => x.AppointmentDateFrom <= DateTime.Now);
+                    var message = _db.AppointmentInfoes.Where(x => x.AppointmentDateFrom <= DateTime.Now
+                                                              && x.AppointmentDateFrom.ToShortDateString() == DateTime.Now.ToShortDateString());
                     //await _queue.ReceiveAsync<ExpressItem>(TimeSpan.FromMinutes(messageWaitTimeoutInMinutes));
                     using (_logger.BeginScope("Within the second loop"))
                     {
-                        //process msg 
+                        foreach (var msg in message)
+                        {
+                            //process msg 
+                        }
                         //await _messageService.ProcessMessage(message.Body);
                         _logger.LogInformation($"Message Processed, Id: {10}"); //provide msg ID
                     }
