@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.Swagger;
-using SWN.Messaging.Msmq;
 using PatientPortalService.Api.Services;
 using System;
 using System.Collections.Generic;

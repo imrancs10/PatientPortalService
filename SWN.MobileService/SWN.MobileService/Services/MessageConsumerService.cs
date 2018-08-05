@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DataLayer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SWN.Messaging.Msmq;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PatientPortalService.Api.Services
 {
@@ -28,9 +29,11 @@ namespace PatientPortalService.Api.Services
                 try
                 {
 
-                    
+                    PatientPortalEntities _db = new PatientPortalEntities();
+
                     //get message to be sent from db 
-                    var message =  10;//await _queue.ReceiveAsync<ExpressItem>(TimeSpan.FromMinutes(messageWaitTimeoutInMinutes));
+                    var message = _db.AppointmentInfoes.Where(x => x.AppointmentDateFrom <= DateTime.Now);
+                    //await _queue.ReceiveAsync<ExpressItem>(TimeSpan.FromMinutes(messageWaitTimeoutInMinutes));
                     using (_logger.BeginScope("Within the second loop"))
                     {
                         //process msg 
