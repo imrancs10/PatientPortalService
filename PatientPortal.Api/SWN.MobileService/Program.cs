@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
-using SWN.MobileService.Api.Services;
+using PatientPortalService.Api.Services;
 using System;
 using System.Diagnostics;
 using System.IO;

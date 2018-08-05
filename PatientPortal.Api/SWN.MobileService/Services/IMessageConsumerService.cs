@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SWN.MobileService.Api.Services
+namespace PatientPortalService.Api.Services
 {
     public interface IMessageConsumerService
     {
