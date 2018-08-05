@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWN.MobileService.Api", "SWN.MobileService\SWN.MobileService.Api.csproj", "{6B34A815-14A1-4DE1-8B04-46BE88AD6871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientPortalService.Api", "SWN.MobileService\PatientPortalService.Api.csproj", "{6B34A815-14A1-4DE1-8B04-46BE88AD6871}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

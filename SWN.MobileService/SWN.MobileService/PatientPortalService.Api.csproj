@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
-    <AssemblyName>SWN.MobileService.Api</AssemblyName>
-    <RootNamespace>SWN.MobileService.Api</RootNamespace>
+    <AssemblyName>PatientPortalService.Api</AssemblyName>
+    <RootNamespace>PatientPortalService.Api</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
