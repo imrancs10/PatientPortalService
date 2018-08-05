@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWN.MobileService.Api", "SWN.MobileService\SWN.MobileService.Api.csproj", "{6B34A815-14A1-4DE1-8B04-46BE88AD6871}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWN.MobileService.Test", "SWN.MobileService.Test\SWN.MobileService.Test.csproj", "{EEFBC4BC-91F0-4865-A492-D296ADA82B99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B34A815-14A1-4DE1-8B04-46BE88AD6871}.Release|x86.Build.0 = Release|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Debug|x86.Build.0 = Debug|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Release|x86.ActiveCfg = Release|Any CPU
+		{EEFBC4BC-91F0-4865-A492-D296ADA82B99}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4C56F88-F42C-4C50-B304-4C6A5FB3A229}
+	EndGlobalSection
+EndGlobal
