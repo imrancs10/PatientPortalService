@@ -17,6 +17,7 @@ using System.IO;
 using System.Messaging;
 using System.Net.Http;
 using System.Text;
+using PatientPortalService.Api.Data;
 
 namespace SWN.MobileService
 {
@@ -40,7 +41,6 @@ namespace SWN.MobileService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            AddJwtAuthentication(services);
             services.AddMvc();
 
             services.AddSingleton<IMessageConsumerService, MessageConsumerService>();
@@ -49,12 +49,8 @@ namespace SWN.MobileService
             (
                () => new HttpClient()
             );
-
-            var dbConnectionString = Configuration.GetValue<string>("Swn402Database:ConnectionString");
-            var dbProviderName = Configuration.GetValue<string>("Swn402Database:ProviderName");
-            var dbTimeout = Configuration.GetValue<int>("Swn402Database:DbQueryTimeout");
-            services.AddSingleton<IDatabase>(_ => new Database(dbConnectionString, dbProviderName) { CommandTimeout = dbTimeout });
-            AddSwagger(services);
+            services.AddDbContext<PatientPortalContext>(options =>
+                                    options.UseSqlServer(Configuration.GetConnectionString("MobileServiceDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,31 +100,6 @@ namespace SWN.MobileService
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SWN Mobile Service V1");
-            });
-        }
-
-        private void AddJwtAuthentication(IServiceCollection services)
-        {
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetValue<string>("JwtToken:Secret")));
-            var clockSkew = TimeSpan.FromSeconds(Configuration.GetValue<int>("JwtToken:ClockSkew"));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                IssuerSigningKey = signingKey,
-                ClockSkew = clockSkew,
-                RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
-                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
-                AuthenticationType = "JWT",
-                ValidateAudience = false,
-                ValidateIssuer = false
-            };
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = tokenValidationParameters;
             });
         }
     }

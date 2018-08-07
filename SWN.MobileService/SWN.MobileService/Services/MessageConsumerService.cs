@@ -1,9 +1,12 @@
-﻿using DataLayer;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using PatientPortalService.Api.Data;
+using PatientPortalService.Api.Infrastructure.Utility;
+using PatientPortalService.Api.Infrastructure.Adaptors;
+using Microsoft.EntityFrameworkCore;
 
 namespace PatientPortalService.Api.Services
 {
@@ -28,19 +31,47 @@ namespace PatientPortalService.Api.Services
             {
                 try
                 {
-                    PatientPortalEntities _db = new PatientPortalEntities();
+                    PatientPortalContext _db = new PatientPortalContext();
                     //get message to be sent from db 
-                    var message = _db.AppointmentInfoes.Where(x => x.AppointmentDateFrom <= DateTime.Now
-                                                              && x.AppointmentDateFrom.ToShortDateString() == DateTime.Now.ToShortDateString());
-                    //await _queue.ReceiveAsync<ExpressItem>(TimeSpan.FromMinutes(messageWaitTimeoutInMinutes));
-                    using (_logger.BeginScope("Within the second loop"))
+                    var messages = _db.AppointmentInfo.Include(x => x.Patient).Include(x => x.Doctor).ThenInclude(x => x.Department)
+                                                                .Where(x => DateTime.Now <= x.AppointmentDateFrom
+                                                                    && x.AppointmentDateFrom.ToShortDateString() == DateTime.Now.ToShortDateString()
+                                                                    && (x.Reminder == false || x.Reminder == null))
+                                                                .ToList();
+                    using (_logger.BeginScope("Process Message"))
                     {
-                        foreach (var msg in message)
+                        foreach (var message in messages)
                         {
                             //process msg 
+                            _logger.LogInformation($"Message Processed,for AppointmentId: {message.AppointmentId}");
+                            Message msg = new Message()
+                            {
+                                MessageTo = message.Patient.Email,
+                                MessageNameTo = message.Patient.FirstName + " " + message.Patient.MiddleName + (string.IsNullOrWhiteSpace(message.Patient.MiddleName) ? "" : " ") + message.Patient.LastName,
+                                Subject = "Appointment Reminder",
+                                Body = EmailHelper.GetAppointmentSuccessEmail(message.Patient.FirstName, message.Patient.MiddleName, message.Patient.LastName, message.Doctor.DoctorName, message.AppointmentDateFrom, message.Doctor.Department.DepartmentName)
+                            };
+                            try
+                            {
+                                //Send Notification
+                                ISendMessageStrategy sendMessageStrategy = new SendMessageStrategyForEmail(msg);
+                                sendMessageStrategy.SendMessages();
+
+                                //Update Reminder Status
+                                var _patientRow = _db.AppointmentInfo.Where(x => x.AppointmentId == message.AppointmentId).FirstOrDefault();
+                                if (_patientRow != null)
+                                {
+                                    _patientRow.Reminder = true;
+                                    _db.Entry(_patientRow).State = EntityState.Modified;
+                                    _db.SaveChanges();
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogInformation("Message Sending fail for Appointment Id {0}.", message.AppointmentId);
+                            }
                         }
-                        //await _messageService.ProcessMessage(message.Body);
-                        _logger.LogInformation($"Message Processed, Id: {10}"); //provide msg ID
                     }
                 }
                 catch (TimeoutException)

@@ -30,7 +30,7 @@ namespace PatientPortalService.Api.Infrastructure.Utility
         public static string GetAppointmentSuccessEmail(string firstname, string middlename, string lastname,string doctorname,DateTime apptime,string deptname)
         {
             string body = string.Format("Hi {0} {1} {2}<br/><br/>", firstname, middlename, lastname);
-            body += "As you requested, here Appointment is booked, Please find the below Appointment details<br/>";
+            body += "Your Appointment is booked Today, Please find the below Appointment details<br/>";
             body += "<br/>" + string.Format("Department Name : {0} <br/>", deptname);
             body += "<br/>" + string.Format("Doctor Name : {0} <br/>", doctorname);
             body += "<br/>" + string.Format("Appointment Time : {0} <br/>", apptime.ToString()) + "<br/><br/>";

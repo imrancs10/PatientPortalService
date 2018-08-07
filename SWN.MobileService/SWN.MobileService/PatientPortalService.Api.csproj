@@ -17,12 +17,10 @@
 
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Data\" />
     <Folder Include="Enums\" />
     <Folder Include="Infrastructure\Adaptors\" />
     <Folder Include="logs\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -51,9 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DataLayer">
-      <HintPath>..\..\..\PatientPotal\DataLayer\bin\Debug\DataLayer.dll</HintPath>
-    </Reference>
     <Reference Include="System.Messaging" />
   </ItemGroup>
 

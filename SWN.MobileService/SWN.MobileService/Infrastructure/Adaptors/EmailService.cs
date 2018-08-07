@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Configuration;
 using PatientPortalService.Api.Infrastructure.Utility;
+using Microsoft.Extensions.Configuration;
 
 namespace PatientPortalService.Api.Infrastructure.Adaptors
 {
